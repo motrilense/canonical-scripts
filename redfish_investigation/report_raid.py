@@ -31,6 +31,7 @@ def safe_get(data: Any, *keys, default=None):
 
 
 def _last_segment(odata_id: str | None) -> str | None:
+    """Extract the last segment from an OData ID path."""
     if not odata_id:
         return None
     parts = odata_id.rstrip("/").split("/")
@@ -38,6 +39,7 @@ def _last_segment(odata_id: str | None) -> str | None:
 
 
 def _read_json(path: Path) -> dict[str, Any] | None:
+    """Read and parse a JSON file, returning None on error."""
     try:
         if not path.exists():
             return None
@@ -76,13 +78,13 @@ def get_raid_information(host_dir: Path, datacenter: str) -> dict[str, Any]:
 
     members = safe_get(systems, "Members", default=[]) or []
     if not members:
-        result["message"] = "No systems info exposed via Redfish"
+        result["message"] = "No system members exposed via Redfish"
         return result
 
     first_system_ref = safe_get(members, 0, "@odata.id")
     system_id = _last_segment(first_system_ref)
     if not system_id:
-        result["message"] = "No systems info exposed via Redfish"
+        result["message"] = "No system member found found"
         return result
 
     # 2) /redfish/v1/Systems/<SystemId>/Storage (try both singular and plural forms)

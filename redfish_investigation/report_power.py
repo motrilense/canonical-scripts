@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Extract power consumption metrics from Redfish data dumps."""
+"""Extract power consumption metrics from Redfish data dumps.
+
+This script scans a local dataset under data/redfish-dump-2025-12-17/
+and reports power readings for each machine.
+"""
 
 import json
 from pathlib import Path
