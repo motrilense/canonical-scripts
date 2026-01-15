@@ -31,6 +31,7 @@ def safe_get(data: Any, *keys, default=None):
 
 
 def _last_segment(odata_id: str | None) -> str | None:
+    """Extract the last segment from an OData ID path."""
     if not odata_id:
         return None
     parts = odata_id.rstrip("/").split("/")
@@ -38,6 +39,7 @@ def _last_segment(odata_id: str | None) -> str | None:
 
 
 def _read_json(path: Path) -> dict[str, Any] | None:
+    """Read and parse a JSON file, returning None on error."""
     try:
         if not path.exists():
             return None
